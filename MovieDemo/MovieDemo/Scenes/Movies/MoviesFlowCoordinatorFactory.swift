@@ -30,7 +30,8 @@ class MoviesCoordinator: ObservableObject {
     let dependencies: DependenciesContainerType
 
     lazy var moviesListView: MoviesListView = {
-        return MoviesListBuilder.build(dependencies: dependencies) { movie in
+        return MoviesListBuilder.build(dependencies: dependencies) { [weak self] movie in
+            guard let self else { return }
             self.pushToDetails(movie: movie)
         }
     }()
